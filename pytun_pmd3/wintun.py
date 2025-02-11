@@ -111,10 +111,10 @@ class MIB_UNICASTIPADDRESS_ROW(Structure):
     ]
 
 
-# WintunCreateAdapter(const WCHAR *AdapterName, const GUID *TunnelType, const GUID *RequestedGUID, GUID *AllocatedGUID,
+# WintunCreateAdapter(const WCHAR *AdapterName, const WCHAR *TunnelType, const GUID *RequestedGUID, GUID *AllocatedGUID,
 # DWORD *LastError)
 wintun.WintunCreateAdapter.restype = HANDLE
-wintun.WintunCreateAdapter.argtypes = [LPCWSTR, POINTER(c_ubyte * 16),
+wintun.WintunCreateAdapter.argtypes = [LPCWSTR, LPCWSTR,
                                        POINTER(c_ubyte * 16), POINTER(c_ubyte * 16),
                                        POINTER(DWORD)]
 
@@ -214,7 +214,7 @@ class TunTapDevice:
         self.session = None
 
         # Create an adapter
-        self.handle = wintun.WintunCreateAdapter(name, byref(tunnel_type_guid),
+        self.handle = wintun.WintunCreateAdapter(name, name,
                                                  byref(requested_guid),
                                                  byref(allocated_guid), byref(last_error))
 
